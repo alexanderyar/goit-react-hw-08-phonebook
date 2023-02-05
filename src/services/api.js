@@ -2,10 +2,10 @@ import axios from "axios";
 
 axios.defaults.baseURL = 'https://connections-api.herokuapp.com/';
 
+// !!!!! 0. Сначала нужно было сделать внешние компоненты аппБара, формы регистрации, формы логИна и раутинг;
+//  1. сначала сделать API для регистрации, логина;
 
-//  1.сначала сделать API для регистрации, логина
-
-//  2.сделать операции, редюсеры, диспатчи регистрации нового пользователя, чтобы можно было получить токен и работать дальше с контактами
+//  2.сделать операции, редюсеры, диспатчи регистрации нового пользователя, чтобы можно было получить токен и работать дальше с контактами;
 
 // потом добавить операции
 // редюсеры
@@ -31,7 +31,7 @@ export async function createUser(credentials) {
     }
 }
 
-export async function LogInUser(credentials) {
+export async function logInUser(credentials) {
     try {
         const { data } = await axios.post('/users/login', credentials);
         return data;
@@ -44,7 +44,7 @@ export async function LogInUser(credentials) {
     }
 }
 
-export async function LogOutUser(credentials) {
+export async function logOutUser(credentials) {
     try {
         const { data } = await axios.post('/users/logout');
         return data;
@@ -130,3 +130,14 @@ export async function updateContactById(id, updatedContactInfo) {
 }
 
 
+////////////////////////////////////
+
+// token utility
+
+export const setAuthHeader = token => {
+    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+}
+
+export const clearAuthHeader = () => {
+    axios.defaults.headers.common.Authorization = '';
+};
