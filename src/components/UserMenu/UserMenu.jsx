@@ -1,17 +1,26 @@
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { selectUserEmail } from "redux/auth/authSelectors"
-import { UserMenuContainer } from "./UserMenu.styled"
+import { GreetingStyled, LogOutButtonStyled, UserMenuContainer } from "./UserMenu.styled"
+import { logOutThunkOperation } from "redux/auth/authOperations"
+
 
 
 export const UserMenu = () => {
  
     const currentUserEmail = useSelector(selectUserEmail)
+    const dispatch = useDispatch();
+    
+    const handleClick = () => {
+        dispatch(logOutThunkOperation())
+    }
     return (
         <UserMenuContainer>
-            <p>Hello, ${currentUserEmail}</p>
+            <GreetingStyled>{currentUserEmail}</GreetingStyled>
 
             {/* later add dispatch onClick (LogOut) */}
-            <button>Logout</button>
+            <LogOutButtonStyled variant="contained" onClick={() => { handleClick() }}>Logout</LogOutButtonStyled>
         </UserMenuContainer>
     )
 }
+
+// <Button variant="contained">Contained</Button>

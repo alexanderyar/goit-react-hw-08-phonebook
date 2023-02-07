@@ -1,11 +1,5 @@
 
 import PropTypes from 'prop-types'
-
-
-
-
-
-
 import { FormikForm } from './Form/Form'
 import { Contacts } from './Contacts/Contacts'
 import { HeaderMain, PhonebookWrapper } from './Phonebook.styled'

@@ -17,7 +17,9 @@ axios.defaults.baseURL = 'https://connections-api.herokuapp.com/';
 
 export async function createUser(credentials) {
     try {
+ 
         const { data } = await axios.post('/users/signup', credentials);
+        console.log(data)
         return data;
         // {      
         // "name": "Adrian Cross",
@@ -58,13 +60,13 @@ export async function logOutUser(credentials) {
 }
 
 
-export async function refreshUser(credentials) {
+export async function refreshUser() {
     try {
-        const { data } = await axios.post('/users/current');
+        const { data } = await axios.get('/users/current');
+        console.log(data)
         return data;
     
-//   no body    token only
-//      
+//   no body    token only    
 
     } catch (error) {
         console.log(error)
@@ -78,6 +80,8 @@ export async function refreshUser(credentials) {
 
 
 // Contacts API. fetching, adding, deleting contacts 
+
+
 export async function fetchContacts() {
 
     // later add what to do on error beside console.log
@@ -92,8 +96,7 @@ export async function fetchContacts() {
 export async function addContact(newContact) {
     try {
         // later add what to do on error beside console.log
-        const { data } = await axios.post('/contacts', {"name": newContact.name,
-  "number": newContact.phone});
+        const { data } = await axios.post('/contacts', newContact);
     return data;
     } catch (error) {
         console.log(error)
@@ -120,10 +123,7 @@ export async function updateContactById(id, updatedContactInfo) {
         const { data } = await axios.patch(`/contacts/${id}`, updatedContactInfo);
         return data;
         
-        // {
-//   "name": "Jacob Mercer",
-//   "number": "761-23-96"
-// }
+
     } catch (error) {
         console.log(error)
     }
@@ -141,3 +141,24 @@ export const setAuthHeader = token => {
 export const clearAuthHeader = () => {
     axios.defaults.headers.common.Authorization = '';
 };
+
+/////////////////////////////////////
+
+
+
+///// разобраться с фетчем и тд контактов
+
+/// !!! чому при рефреші на сторінці контактів видає помилку?
+
+/// Если сначала на странице контактов при рефреше идет запрос за контактами - выдает ошибку, а потом перерендер при удачном рефреше.
+// проверки фильтра уходят в undefined
+// проблема в закрытых маршрутах
+// значит надо пока убрать проверку фильтра, закрыть маршруты как надо, а потом уже снова открыть функцию фильтра и посмотреть,
+// как работает   -------> РАБОТАЕТ!!! приватный маршрут 
+
+
+// зробити lazy
+
+// внутрішні індекси краще робити прямо по ходу. Рефакторити після дуже важко
+
+

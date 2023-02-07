@@ -6,5 +6,6 @@ margin-left:auto;
 margin-right:auto;
 `
 export const HeaderMain = styled.h1`
-text-align:center
+text-align:center;
+padding: 5 30;
 `

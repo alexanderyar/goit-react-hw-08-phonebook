@@ -2,12 +2,10 @@ import React from 'react'
 
 import PropTypes from 'prop-types'
 import { Filter } from './Filter/Filter'
-import { Header, ListItem, ListWrapper } from './Contacts.styled'
+import { Header, ListWrapper } from './Contacts.styled'
 import { useDispatch, useSelector } from 'react-redux'
-// import { deletingChosenContact } from 'redux/contactsSlice/contactsSlice'
-import { deleteContactThunkOperation, fetchContactsThunkOperation } from 'redux/contacts/contactsOperations'
-import { useEffect } from 'react'
-import { Trash} from 'grommet-icons';
+import { deleteContactThunkOperation } from 'redux/contacts/contactsOperations'
+import { ContactsList } from './ContactsList'
 
 
 
@@ -15,36 +13,55 @@ import { Trash} from 'grommet-icons';
 export const Contacts =  () => {
 
     const dispatch = useDispatch();
+
+    // moved to ContactsPage for test;
     // fetching contacts from backend;
-    useEffect(() => {
-      dispatch(fetchContactsThunkOperation())
-    }, [dispatch])
+    // useEffect(() => {
+    //   dispatch(fetchContactsThunkOperation())
+    // }, [dispatch])
     
      const contacts = useSelector(state => state.contacts.contacts);
 
    
     const filterLowered = useSelector(state => state.filter).toLowerCase()
     
-      const filteredContacts =  contacts.filter(contact => 
-            contact.name.toLowerCase().includes(filterLowered)
-     )
+    const CheckIfNeedToRenderContacts = (filterValue, contactsValue) => {
+       console.log( contactsValue)
+        if (contactsValue.length === 0) {
+            return false;  
+        }
+     const filteredContacts = contacts.filter(contact =>
+         contact.name.toLowerCase().includes(filterValue))
+        return filteredContacts
 
+    }
+   
+    const filteredContacts = CheckIfNeedToRenderContacts(filterLowered, contacts)
+    console.log(filteredContacts)
+
+
+// const filteredContacts = contacts.filter(contact =>
+//        contact.name.toLowerCase().includes(filterLowered) )
+
+    
     // refactored. now onDelete click has been transferred FROM Phonebook component. dispatch is used instead of useState to delete (using filter) chosen contact
  const onDeleteClick = (id) => {
         console.log(id)
      dispatch(deleteContactThunkOperation(id));
  }
-  
+//   {isLoggedIn ? <UserMenu /> : <AuthNav />}
     
+ 
     return (
+
         <>
             <Header>Existing Contacts</Header>
             <Filter />
             <ListWrapper>
-                {filteredContacts.map(({ name, id, phone }) => (
-                    <ListItem key={id}><p>{name}: {phone}</p><button type="button" onClick={() => onDeleteClick(id)}>  <Trash size="15px"/></button></ListItem>
-                    
-                ))}
+               
+                {filteredContacts ?  <ContactsList filteredContacts={filteredContacts} onDeleteClick={onDeleteClick} />
+     : <p>Add your first contact now!</p> }
+             
               
             </ListWrapper>
         </>)

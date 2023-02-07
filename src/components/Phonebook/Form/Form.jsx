@@ -1,12 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { ButtonStyled, FormStyled, Input } from './Form.styled';
+import { ButtonStyled, FormStyled } from './Form.styled';
 import { Formik } from 'formik';
 import { useDispatch } from 'react-redux';
-// import { nanoid } from 'nanoid';
-// import { addingNewContact } from 'redux/contactsSlice/contactsSlice';
 import { addContactThunkOperation } from 'redux/contacts/contactsOperations';
 import { Header } from '../Contacts/Contacts.styled';
+import { RegisterInput } from 'components/RegisterForm/RegisterForm.styled';
 
 
 
@@ -16,7 +15,7 @@ import { Header } from '../Contacts/Contacts.styled';
 // values for Formik 
 const initialValues = {
     name: '',
-    phone: ''
+    number: ''
 }
    
 export const FormikForm = ({ handleSubmit }) => {
@@ -62,7 +61,7 @@ handleSubmit = (values, {resetForm}) => {
              <FormStyled autoComplete='off'>
             <label htmlFor="name">
                Please enter a name
-            <Input
+            <RegisterInput
   type="text"
   name="name"
   pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -72,16 +71,16 @@ handleSubmit = (values, {resetForm}) => {
 
                 <label htmlFor="number">
                    phone number
-                    <Input
+                    <RegisterInput
   type="tel"
-  name="phone"
+  name="number"
   pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
   title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
   required
 />
                </label>
             
-                <ButtonStyled type="submit">Submit</ButtonStyled>
+                <ButtonStyled type="submit" variant="outlined">Submit</ButtonStyled>
       
  
 
