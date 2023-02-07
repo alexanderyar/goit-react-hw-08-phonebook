@@ -1,10 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { createUser, logInUser, logOutUser, refreshUser } from "services/api";
-
-// пізніше додати тости
-import toast, { Toaster } from 'react-hot-toast';
-
 // token api utilities;
 import { setAuthHeader, clearAuthHeader } from "services/api";
 
