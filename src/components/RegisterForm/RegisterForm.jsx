@@ -1,5 +1,5 @@
 import { Header } from "components/Phonebook/Contacts/Contacts.styled";
-import { FormStyled, Input } from "components/Phonebook/Form/Form.styled";
+import { FormStyled } from "components/Phonebook/Form/Form.styled";
 import { Formik } from "formik";
 import { useDispatch } from "react-redux";
 import { createUserThunkOperation } from "redux/auth/authOperations";
